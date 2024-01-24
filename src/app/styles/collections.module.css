@@ -24,6 +24,18 @@
   text-align: center;
   letter-spacing: 0.09rem;
 }
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.header button {
+  font-family: var(--font-mono);
+  font-size: smaller;
+  width: min-content;
+  margin: 0.5rem;
+  padding: 0.15rem 0.25rem;
+}
 
 .databox {
   display: flex;
@@ -40,4 +52,24 @@
 .databox button:hover {
   color: var(--white);
   border: 0.5px solid var(--accent);
+}
+
+.collectionDetails {
+  width: 70%;
+}
+.collectionDetails p {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+}
+.collectionDetails p span {
+  text-align: end;
+}
+.collectionDetails a {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+}
+.collectionDetails a span {
+  text-align: end;
 }

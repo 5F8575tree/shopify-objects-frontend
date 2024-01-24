@@ -24,7 +24,18 @@
   text-align: center;
   letter-spacing: 0.09rem;
 }
-
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.header button {
+  font-family: var(--font-mono);
+  font-size: smaller;
+  width: min-content;
+  margin: 0.5rem;
+  padding: 0.15rem 0.25rem;
+}
 .databox {
   display: flex;
 }

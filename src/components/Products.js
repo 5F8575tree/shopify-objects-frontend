@@ -8,13 +8,26 @@ function Products({ products }) {
     setExpandedProductId(expandedProductId === productId ? null : productId);
   }
 
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        console.log('Text copied to clipboard');
+      })
+      .catch(err => {
+        console.error('Failed to copy to clipboard', err);
+      })
+  }
+
   return (
     <div className={styles.products}>
       {products.map(product => (
         <div className={styles.product} key={product.id}>
-          <h3>{product.handle}</h3>
+          <div className={styles.header}>
+            <h3>{product.handle}</h3>
+            <button onClick={() => copyToClipboard(product.handle)}>Copy</button>
+          </div>
           <div className={styles.databox}>
-            <button onClick={() => toggleDetails(product.id)}>Direct Data</button>
+            <button onClick={() => toggleDetails(product.id)}>Child Objects</button>
             <button>Child Data</button>
           </div>
           {expandedProductId === product.id && (

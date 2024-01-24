@@ -41,3 +41,22 @@
   color: var(--white);
   border: 0.5px solid var(--accent);
 }
+.productDetails {
+  width: 70%;
+}
+.productDetails p {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+}
+.productDetails p span {
+  text-align: end;
+}
+.productDetails a {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+}
+.productDetails a span {
+  text-align: end;
+}

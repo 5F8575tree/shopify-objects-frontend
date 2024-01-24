@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from '../app/styles/products.module.css';
+import styles from '../styles/products.module.css';
 
 function Products({ products }) {
   const [expandedProductId, setExpandedProductId] = useState([]);

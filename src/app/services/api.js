@@ -11,6 +11,19 @@ const getShopifyCollections = async () => {
   }
 };
 
+const getShopifyCollectionDetails = async (collectionId) => {
+  try {
+    const response = await fetch(`http://localhost:3001/shopify/collections/${collectionId}`);
+    if (!response.ok) {
+      throw new Error(`Network response for collection ${collectionId} was not ok`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(`There has been a problem with your fetch operation for collection ${collectionId}:`, error);
+    throw error;
+  }
+};
+
 const getShopifyProducts = async () => {
   try {
     const response = await fetch('http://localhost:3001/shopify/products');
@@ -24,4 +37,4 @@ const getShopifyProducts = async () => {
   }
 }
 
-export { getShopifyCollections, getShopifyProducts };
+export { getShopifyCollections, getShopifyProducts, getShopifyCollectionDetails };

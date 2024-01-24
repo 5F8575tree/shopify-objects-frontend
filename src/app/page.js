@@ -2,15 +2,24 @@
 
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
-import { getShopifyCollections, getShopifyProducts } from "./services/api";
-import Collections from "@/components/Collections";
-import Products from '@/components/Products';
-import CollectionProducts from '@/components/CollectionProducts';
+import { getShopifyCollections, getShopifyProducts, getShopifyCollectionDetails } from "./services/api";
+import Collections from "@/app/components/Collections";
+import Products from '@/app/components/Products';
+import CollectionProducts from '@/app/components/CollectionProducts';
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState('collections');
   const [collections, setCollections] = useState([]);
   const [products, setProducts] = useState([]);
+
+  const fetchCollectionDetails = async (collectionId) => {
+    try {
+      const details = await getShopifyCollectionDetails(collectionId);
+      console.log(details);
+    } catch (error) {
+      console.error('Error fetching collection details:', error);
+    }
+  };
 
   useEffect(() => {
     getShopifyCollections()
@@ -48,7 +57,7 @@ export default function Home() {
         <div className={styles.content}>
           {activeSection === 'collections' && (
             <div>
-              <Collections collections={collections} />
+              <Collections collections={collections} onFetchDetails={fetchCollectionDetails}/>
             </div>
           )}
           {activeSection === 'products' && (

@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import styles from '../app/styles/collections.module.css';
+import styles from '../styles/collections.module.css';
 
-function Collections({ collections }) {
+function Collections({ collections, onFetchDetails }) {
   const [expandedCollectionId, setExpandedCollectionId] = useState([]);
 
   const toggleDetails = (collectionId) => {
@@ -28,7 +28,7 @@ function Collections({ collections }) {
           </div>
           <div className={styles.databox}>
             <button onClick={() => toggleDetails(collection.id)}>Child Objects</button>
-            <button>Child Data</button>
+            <button onClick={() => onFetchDetails(collection.id)}>Collection Data</button>
           </div>
           {expandedCollectionId === collection.id && (
             <div className={styles.collectionDetails}>

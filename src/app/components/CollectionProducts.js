@@ -1,4 +1,4 @@
-import styles from '../app/styles/collections.module.css';
+import styles from '../styles/collections.module.css';
 
 function Collections({ collectionProducts }) {
   return (

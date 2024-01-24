@@ -27,3 +27,8 @@
 .description .title {
   padding: 0 0 2rem;
 }
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+}

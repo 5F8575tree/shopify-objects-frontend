@@ -32,14 +32,18 @@ export default function Home() {
     setActiveSection(section);
   }
 
+  const getHeaderClass = (section) => {
+    return `${styles.title} ${activeSection === section ? styles.activeSection : ''}`;
+  }
+
   return (
     <main className={styles.main}>
       <h1>Shopify Admin API</h1>
       <div className={styles.description}>
         <div className={styles.navigation}>
-          <h2 onClick={() => handleSectionChange('collections')} className={styles.title}>Shopify Collections</h2>
-          <h2 onClick={() => handleSectionChange('products')} className={styles.title}>Shopify Products</h2>
-          <h2 onClick={() => handleSectionChange('collectionProducts')} className={styles.title}>Collection Products</h2>
+          <h2 onClick={() => handleSectionChange('collections')} className={getHeaderClass('collections')}>Shopify Collections</h2>
+          <h2 onClick={() => handleSectionChange('products')} className={getHeaderClass('products')}>Shopify Products</h2>
+          <h2 onClick={() => handleSectionChange('collectionProducts')} className={getHeaderClass('collectionProducts')}>Collection Products</h2>
         </div>
         <div className={styles.content}>
           {activeSection === 'collections' && (

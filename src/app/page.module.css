@@ -15,8 +15,6 @@
   padding: 2rem;
   display: inherit;
   flex-direction: column;
-  justify-content: inherit;
-  align-items: inherit;
   font-size: 0.85rem;
   max-width: var(--max-width);
   width: 100%;
@@ -24,8 +22,16 @@
   font-family: var(--font-general);
 }
 
-.description .title {
+.title {
+  cursor: pointer;
   padding: 0 0 2rem;
+  color: var(--grey-light);
+}
+.title:hover {
+  color: var(--white);
+}
+.activeSection {
+  color: var(--white);
 }
 
 .navigation {

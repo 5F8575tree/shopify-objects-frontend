@@ -18,11 +18,22 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
+      <h1>Shopify Admin API</h1>
       <div className={styles.description}>
-        <h1 className={styles.title}>Shopify Collections:</h1>
+        <h2 className={styles.title}>Shopify Collections</h2>
+        <div className={styles.collections}>
         {collections.map(collection => (
-          <div className={styles.collection} key={collection.id}>{collection.handle}</div>
+          <>
+            <div className={styles.collection} key={collection.id}>
+              <h3>{collection.handle}</h3>
+              <div className={styles.databox}>
+                <button>Direct Data</button>
+                <button>Child Data</button>
+              </div>
+            </div>
+          </>
         ))}
+        </div>
       </div>
     </main>
   );

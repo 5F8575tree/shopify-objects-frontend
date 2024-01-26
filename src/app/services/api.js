@@ -55,4 +55,62 @@ const getShopifyProducts = async () => {
   }
 }
 
-export { getShopifyCollections, getShopifyProducts, getShopifyCollectionDetails };
+const storefrontRequest = async (query) => {
+  try {
+    const response = await fetch('http://localhost:3001/storefront', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ query })
+    });
+    if (!response.ok) {
+      throw new Error('Storefront API response was not ok');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error with Storefront API request:', error);
+    throw error;
+  }
+};
+
+const getStorefrontCollections = async () => {
+  const query = `
+    {
+      collections(first: 10) {
+        edges {
+          node {
+            id
+            title
+            handle
+          }
+        }
+      }
+    }
+  `;
+  return await storefrontRequest(query);
+};
+
+const getStorefrontProducts = async () => {
+  const query = `
+    {
+      products(first: 10) {
+        edges {
+          node {
+            id
+            title
+            handle
+            priceRange {
+              minVariantPrice {
+                amount
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+  return await storefrontRequest(query);
+};
+
+export { getShopifyCollections, getShopifyProducts, getShopifyCollectionDetails, getStorefrontCollections, getStorefrontProducts };

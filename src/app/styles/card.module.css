@@ -1,0 +1,29 @@
+.card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  height: min-content;
+}
+
+.card:hover {
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+}
+
+.cardHeader {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.cardContent {
+  display: none;
+  padding-left: 0;
+}
+
+.cardContent.show {
+  display: block;
+}
+
+.cardContent li {
+  margin-bottom: 5px;
+}

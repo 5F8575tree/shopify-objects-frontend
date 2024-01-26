@@ -35,3 +35,19 @@
   display: flex;
   justify-content: space-between;
 }
+
+.infoBox p {
+  padding: 0.5rem 0 0;
+  color: var(--grey-light);
+  font-size: 0.75rem;
+}
+
+.infoBox .cards li {
+  list-style-type: none;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}

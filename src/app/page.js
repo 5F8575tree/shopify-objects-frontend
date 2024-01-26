@@ -6,6 +6,8 @@ import { getShopifyCollections, getShopifyProducts } from "./services/api";
 import Collections from "@/app/components/Collections";
 import Products from '@/app/components/Products';
 import Card from "./components/Card";
+import StorefrontCollections from "./components/StorefrontCollections";
+import StorefrontProducts from "./components/StorefrontProducts";
 
 const titleSection = [
   {
@@ -147,20 +149,35 @@ export default function Home() {
           </ul>
         )}
       </div>
-      <div className={styles.description}>
-        <div className={styles.navigation}>
-          <h2 onClick={() => handleSectionChange('collections')} className={getHeaderClass('collections')}>Shopify Collections</h2>
-          <h2 onClick={() => handleSectionChange('products')} className={getHeaderClass('products')}>Shopify Products</h2>
+
+      {/* Admin API Section */}
+      {activeIndex === 0 && (
+        <div className={styles.description}>
+          <div className={styles.navigation}>
+            <h2 onClick={() => handleSectionChange('collections')} className={getHeaderClass('collections')}>Shopify Collections</h2>
+            <h2 onClick={() => handleSectionChange('products')} className={getHeaderClass('products')}>Shopify Products</h2>
+          </div>
+          <div className={styles.content}>
+            {activeSection === 'collections' && <Collections collections={collections} />}
+            {activeSection === 'products' && <Products products={products} />}
+          </div>
         </div>
-        <div className={styles.content}>
-          {activeSection === 'collections' && (
-            <Collections collections={collections} />
-          )}
-          {activeSection === 'products' && (
-            <Products products={products} />
-          )}
+      )}
+
+      {/* Storefront API Section */}
+      {activeIndex === 1 && (
+        <div className={styles.description}>
+          <div className={styles.navigation}>
+            {/* You may want to rename these to something more relevant to the Storefront API */}
+            <h2 onClick={() => handleSectionChange('storefrontCollections')} className={getHeaderClass('storefrontCollections')}>Shopify Storefront Collections</h2>
+            <h2 onClick={() => handleSectionChange('storefrontProducts')} className={getHeaderClass('storefrontProducts')}>Shopify Storefront Products</h2>
+          </div>
+          <div className={styles.content}>
+            {activeSection === 'storefrontCollections' && <StorefrontCollections collections={collections} />}
+            {activeSection === 'storefrontProducts' && <StorefrontProducts products={products} />}
+          </div>
         </div>
-      </div>
+      )}
     </main>
   );
 }

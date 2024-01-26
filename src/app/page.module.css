@@ -37,6 +37,29 @@
   display: block;
 }
 /* cards on upper page */
+.showCardsWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.showCardsBtn {
+  font-family: var(--font-general);
+  font-weight: 200;
+  font-size: 0.8rem;
+  margin: 1rem;
+  background-color: #333;
+  padding: 0.35rem 1.35rem;
+  border-top: none;
+  border-left: none;
+}
+.showCardsBtn:hover {
+  cursor: pointer;
+  background-color: #393939;
+}
+.showCardsBtn:active {
+  border-right: none;
+  border-bottom: none;
+}
 .infoBox p {
   padding: 0.5rem 0 0;
   color: var(--grey-light);

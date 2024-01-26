@@ -2,24 +2,14 @@
 
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
-import { getShopifyCollections, getShopifyProducts, getShopifyCollectionDetails } from "./services/api";
+import { getShopifyCollections, getShopifyProducts } from "./services/api";
 import Collections from "@/app/components/Collections";
 import Products from '@/app/components/Products';
-import CollectionProducts from '@/app/components/CollectionProducts';
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState('collections');
   const [collections, setCollections] = useState([]);
   const [products, setProducts] = useState([]);
-
-  const fetchCollectionDetails = async (collectionId) => {
-    try {
-      const details = await getShopifyCollectionDetails(collectionId);
-      console.log(details);
-    } catch (error) {
-      console.error('Error fetching collection details:', error);
-    }
-  };
 
   useEffect(() => {
     getShopifyCollections()
@@ -29,7 +19,7 @@ export default function Home() {
       })
       .catch(error => console.log(error));
 
-      getShopifyProducts()
+    getShopifyProducts()
       .then(data => {
         console.log(data);
         setProducts(data.products);
@@ -52,23 +42,13 @@ export default function Home() {
         <div className={styles.navigation}>
           <h2 onClick={() => handleSectionChange('collections')} className={getHeaderClass('collections')}>Shopify Collections</h2>
           <h2 onClick={() => handleSectionChange('products')} className={getHeaderClass('products')}>Shopify Products</h2>
-          <h2 onClick={() => handleSectionChange('collectionProducts')} className={getHeaderClass('collectionProducts')}>Collection Products</h2>
         </div>
         <div className={styles.content}>
           {activeSection === 'collections' && (
-            <div>
-              <Collections collections={collections} onFetchDetails={fetchCollectionDetails}/>
-            </div>
+            <Collections collections={collections} />
           )}
           {activeSection === 'products' && (
-            <div>
-              <Products products={products} />
-            </div>
-          )}
-          {activeSection === 'collectionProducts' && (
-            <div>
-              <CollectionProducts collectionProducts={collectionProducts} />
-            </div>
+            <Products products={products} />
           )}
         </div>
       </div>

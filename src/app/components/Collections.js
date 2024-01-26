@@ -1,22 +1,43 @@
 import { useState } from 'react';
+import { getShopifyCollectionDetails } from '../services/api';
 import styles from '../styles/collections.module.css';
 
-function Collections({ collections, onFetchDetails }) {
-  const [expandedCollectionId, setExpandedCollectionId] = useState([]);
+function Collections({ collections }) {
+  const [expandedCollectionId, setExpandedCollectionId] = useState(null);
+  const [expandedDetailsId, setExpandedDetailsId] = useState(null);
+  const [collectionDetails, setCollectionDetails] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const toggleDetails = (collectionId) => {
-    setExpandedCollectionId(expandedCollectionId === collectionId ? null : collectionId);
-  }
+  const toggleProductDetails = async (collectionId) => {
+    if (expandedCollectionId === collectionId) {
+      setExpandedCollectionId(null);
+    } else {
+      if (!collectionDetails[collectionId]) {
+        try {
+          setLoading(true);
+          const details = await getShopifyCollectionDetails(collectionId);
+          setCollectionDetails({ ...collectionDetails, [collectionId]: details });
+          setError(null);
+        } finally {
+          setLoading(false);
+        }
+      }
+      setExpandedCollectionId(collectionId);
+    }
+  };
+
+  const toggleChildData = (collectionId) => {
+    setExpandedDetailsId(expandedDetailsId === collectionId ? null : collectionId);
+  };
 
   const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text)
-      .then(() => {
-        console.log('Text copied to clipboard');
-      })
-      .catch(err => {
-        console.error('Failed to copy to clipboard', err);
-      })
-  }
+    navigator.clipboard.writeText(text).then(() => {
+      console.log('Text copied to clipboard');
+    }).catch(err => {
+      console.error('Failed to copy to clipboard', err);
+    });
+  };
 
   return (
     <div className={styles.collections}>
@@ -27,15 +48,29 @@ function Collections({ collections, onFetchDetails }) {
             <button onClick={() => copyToClipboard(collection.handle)}>Copy</button>
           </div>
           <div className={styles.databox}>
-            <button onClick={() => toggleDetails(collection.id)}>Child Objects</button>
-            <button onClick={() => onFetchDetails(collection.id)}>Collection Data</button>
+            <button onClick={() => toggleProductDetails(collection.id)}>Collection Products</button>
+            <button onClick={() => toggleChildData(collection.id)}>Child Data</button>
           </div>
           {expandedCollectionId === collection.id && (
             <div className={styles.collectionDetails}>
-              <p>Title <span>{collection.title}</span></p>
-              <p>Handle <span>{collection.handle}</span></p>
-              <p>Id <span>{collection.id}</span></p>
-              <a href={collection.image.src}>Image <span>link</span></a>
+              {loading && <p>Loading...</p>}
+              {error && <p>{error}</p>}
+              {collectionDetails[collection.id] && (
+                <div>
+                  <h4>Products in this Collection:</h4>
+                  {collectionDetails[collection.id].products.map(product => (
+                    <p key={product.id}>{product.title}</p>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+          {expandedDetailsId === collection.id && (
+            <div className={styles.collectionDetails}>
+              <p>Title: <span>{collection.title}</span></p>
+              <p>Handle: <span>{collection.handle}</span></p>
+              <p>Id: <span>{collection.id}</span></p>
+              {collection.image && <a href={collection.image.src}>Image: <span>link</span></a>}
             </div>
           )}
         </div>

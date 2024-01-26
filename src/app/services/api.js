@@ -13,16 +13,34 @@ const getShopifyCollections = async () => {
 
 const getShopifyCollectionDetails = async (collectionId) => {
   try {
-    const response = await fetch(`http://localhost:3001/shopify/collections/${collectionId}`);
-    if (!response.ok) {
-      throw new Error(`Network response for collection ${collectionId} was not ok`);
+    const collectionUrl = `http://localhost:3001/shopify/collections/${collectionId}`;
+    const productsUrl = `http://localhost:3001/shopify/collections/${collectionId}/products`;
+
+    const [collectionResponse, productsResponse] = await Promise.all([
+      fetch(collectionUrl),
+      fetch(productsUrl)
+    ]);
+
+    if (!collectionResponse.ok) {
+      throw new Error(`Failed to fetch collection details for ID: ${collectionId}`);
     }
-    return await response.json();
+    if (!productsResponse.ok) {
+      throw new Error(`Failed to fetch products for collection ID: ${collectionId}`);
+    }
+
+    const collectionData = await collectionResponse.json();
+    const productsData = await productsResponse.json();
+
+    return {
+      collection: collectionData,
+      products: productsData.products
+    };
   } catch (error) {
-    console.error(`There has been a problem with your fetch operation for collection ${collectionId}:`, error);
+    console.error('Error in fetching collection details or products:', error);
     throw error;
   }
 };
+
 
 const getShopifyProducts = async () => {
   try {
@@ -31,7 +49,7 @@ const getShopifyProducts = async () => {
       throw new Error('Network response for products was not ok')
     }
     return await response.json();
-  } catch {
+  } catch (error) {
     console.error('There has been as problem with your fetch operation:', error);
     throw error;
   }

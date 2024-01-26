@@ -6,10 +6,52 @@
 }
 
 .main h1 {
+  line-height: 1.6;
   border-bottom: 1px solid var(--accent);
-  line-height: 1.6;;
 }
 
+.main h1:last-child {
+  text-align: end;
+}
+/* h1 splits into active and not active */
+.headers {
+  display: flex;
+  justify-content: space-between;
+}
+.headerTitle {
+  cursor: pointer;
+  font-weight: normal;
+  color: var(--grey-light);
+  width: 100%;
+}
+.headerTitle:not(.activeTitle):hover {
+  color: var(--white);
+}
+.activeTitle {
+  color: var(--white);
+}
+.contents {
+  display: none;
+}
+.showContent {
+  display: block;
+}
+/* cards on upper page */
+.infoBox p {
+  padding: 0.5rem 0 0;
+  color: var(--grey-light);
+  font-size: 0.75rem;
+}
+.infoBox .cards li {
+  list-style-type: none;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* lower page section */
 .description {
   padding: 2rem;
   font-size: 0.85rem;
@@ -18,7 +60,10 @@
   z-index: 2;
   font-family: var(--font-general);
 }
-
+.navigation {
+  display: flex;
+  justify-content: space-between;
+}
 .title {
   cursor: pointer;
   padding: 0 0 2rem;
@@ -29,25 +74,4 @@
 }
 .activeSection {
   color: var(--white);
-}
-
-.navigation {
-  display: flex;
-  justify-content: space-between;
-}
-
-.infoBox p {
-  padding: 0.5rem 0 0;
-  color: var(--grey-light);
-  font-size: 0.75rem;
-}
-
-.infoBox .cards li {
-  list-style-type: none;
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
 }

@@ -28,6 +28,28 @@ export default function Home() {
   const [showCards, setShowCards] = useState(false);
   const [storefrontProducts, setStorefrontProducts] = useState([]);
   const [storefrontCollections, setStorefrontCollections] = useState([]);
+  const [showIntrospection, setShowIntrospection] = useState(false);
+  const [introspectionData, setIntrospectionData] = useState(null);
+
+  const fetchIntrospectionData = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/storefront/introspection');
+      if (!response.ok) {
+        throw new Error('Failed to fetch introspection data');
+      }
+      const data = await response.json();
+      setIntrospectionData(JSON.stringify(data, null, 2));
+    } catch (error) {
+      console.error('Error fetching introspection data:', error);
+    }
+  };
+
+  const handleToggleIntrospection = () => {
+    setShowIntrospection(!showIntrospection);
+    if (!showIntrospection && !introspectionData) { // Fetch data only if it hasn't been fetched yet
+      fetchIntrospectionData();
+    }
+  }
 
   const handleToggleCards = () => {
     setShowCards(!showCards);
@@ -101,9 +123,17 @@ export default function Home() {
           <button className={styles.showCardsBtn} onClick={handleToggleCards}>
             {showCards ? "Hide Details" : "View More"}
           </button>
+          <button className={styles.showCardsBtn} onClick={handleToggleIntrospection}>
+            {showIntrospection ? "Hide Introspection" : "View Introspection"}
+          </button>
         </div>
         {showCards && (
           <InfoCards />
+        )}
+        {showIntrospection && introspectionData && (
+          <div className={styles.introspectionBox}>
+            <pre>{introspectionData}</pre>
+          </div>
         )}
       </div>
 

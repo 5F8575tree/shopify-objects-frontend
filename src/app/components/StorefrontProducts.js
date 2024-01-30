@@ -5,6 +5,7 @@ function StorefrontProducts({ products }) {
   const [expandedProductId, setExpandedProductId] = useState([]);
 
   const toggleDetails = (productId) => {
+    getIntrospection(productId);
     setExpandedProductId(expandedProductId === productId ? null : productId);
   }
 
@@ -18,6 +19,13 @@ function StorefrontProducts({ products }) {
       })
   }
 
+  const copyLiquidTag = (attributeName) => {
+    const liquidTag = `{{ product.id | where, "${attributeName}" }}`;
+    navigator.clipboard.writeText(liquidTag)
+      .then(() => console.log('Liquid tag copied to clipboard'))
+      .catch(err => console.error('Failed to copy Liquid tag', err));
+  };
+
   return (
     <div className={styles.products}>
       {products.map(product => (
@@ -25,10 +33,10 @@ function StorefrontProducts({ products }) {
           <div className={styles.header}>
             <h3>{product.handle}</h3>
             <button onClick={() => copyToClipboard(product.handle)}>Copy</button>
+            <button onClick={() => copyLiquidTag(product.id)}>Copy Liquid</button>
           </div>
           <div className={styles.databox}>
-            <button onClick={() => toggleDetails(product.id)}>Child Objects</button>
-            <button>Child Data</button>
+            <button onClick={() => toggleDetails(product.id)}>Introspection Query</button>
           </div>
           {expandedProductId === product.id && (
             <div className={styles.productDetails}>

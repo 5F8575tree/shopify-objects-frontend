@@ -69,20 +69,16 @@ const getStorefrontProducts = async () => {
 };
 
 const getStorefrontCollections = async () => {
-  const query = `
-    {
-      collections(first: 10) {
-        edges {
-          node {
-            id
-            title
-            handle
-          }
-        }
-      }
+  try {
+    const response = await fetch('http://localhost:3001/storefront/collections');
+    if (!response.ok) {
+      throw new Error('Storefront API response was not ok');
     }
-  `;
-  return await storefrontRequest(query);
+    return await response.json();
+  } catch (error) {
+    console.error('Error with Storefront API request:', error);
+    throw error;
+  }
 };
 
 export { getShopifyCollections, getShopifyProducts, getShopifyCollectionDetails, getStorefrontCollections, getStorefrontProducts };

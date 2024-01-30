@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
-import { getShopifyCollections, getShopifyProducts, getStorefrontProducts } from "./services/api";
+import { getShopifyCollections, getShopifyProducts, getStorefrontCollections, getStorefrontProducts } from "./services/api";
 import Collections from "@/app/components/Collections";
 import Products from '@/app/components/Products';
-import Card from "./components/Card";
+import InfoCards from "@/app/components/InfoCards";
 import StorefrontCollections from "./components/StorefrontCollections";
 import StorefrontProducts from "./components/StorefrontProducts";
 
@@ -27,46 +27,44 @@ export default function Home() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [showCards, setShowCards] = useState(false);
   const [storefrontProducts, setStorefrontProducts] = useState([]);
+  const [storefrontCollections, setStorefrontCollections] = useState([]);
 
   const handleToggleCards = () => {
     setShowCards(!showCards);
   }
 
-  const fetchStorefrontProducts = async () => {
-    try {
-      // when i implement querying
-      // const query = 'GraphQL query here';
-      // const data = await getStorefrontProducts(query);
-      const data = await getStorefrontProducts();
-      console.log(data);
-      setStorefrontProducts(data);
-    } catch (error) {
-      console.error('Failed to fetch products via Storefront API', error);
-    }
-  }
-
   useEffect(() => {
-    getShopifyCollections()
-      .then(data => {
-        console.log(data);
-        setCollections(data.smart_collections);
-      })
-      .catch(error => console.log(error));
+    const fetchData = async () => {
+      try {
+        const shopifyCollections = getShopifyCollections();
+        const shopifyProducts = getShopifyProducts();
+        // Fetch both Shopify and Storefront data in parallel for efficiency
+        const [shopifyCollectionsData, shopifyProductsData] = await Promise.all([shopifyCollections, shopifyProducts]);
 
-    getShopifyProducts()
-      .then(data => {
-        console.log(data);
-        setProducts(data.products);
-      })
-      .catch(error => console.log(error));
-  }, []);
+        // Update state with Shopify data
+        setCollections(shopifyCollectionsData.smart_collections);
+        setProducts(shopifyProductsData.products);
+
+        // Fetch Storefront data if the active section requires it
+        if (activeSection === 'storefrontCollections' || activeSection === 'storefrontProducts') {
+          const storefrontCollectionsData = await getStorefrontCollections();
+          const storefrontProductsData = await getStorefrontProducts();
+          console.log(storefrontCollectionsData);
+
+          setStorefrontCollections(storefrontCollectionsData);
+          setStorefrontProducts(storefrontProductsData);
+        }
+      } catch (error) {
+        console.error('Failed to fetch data', error);
+      }
+    };
+
+    fetchData();
+  }, [activeSection]); // Dependency array ensures useEffect is called when activeSection changes
+
 
   const handleHeaderClick = (index) => {
     setActiveIndex(index === activeIndex ? null : index);
-
-    if (index === 1) {
-      fetchStorefrontProducts();
-    }
   };
 
   const handleSectionChange = (section) => {
@@ -105,66 +103,7 @@ export default function Home() {
           </button>
         </div>
         {showCards && (
-          <ul className={styles.cards}>
-            <Card title="Collections">
-              <li>categorization</li>
-              <li>custom colelctions</li>
-              <li>smart collections</li>
-              <li>storefront organization</li>
-              <li>promotional campaigns</li>
-            </Card>
-            <Card title="Products">
-              <li>inventory management</li>
-              <li>variants and options</li>
-              <li>stock management</li>
-              <li>product organization</li>
-              <li>SEO optimization</li>
-            </Card>
-            <Card title="Orders">
-              <li>order processing</li>
-              <li>customer communication</li>
-              <li>order adjustments</li>
-              <li>payment management</li>
-              <li>analytics and reporting</li>
-            </Card>
-            <Card title="Customers">
-              <li>customer profiles</li>
-              <li>segmentation</li>
-              <li>personalization</li>
-              <li>customer service</li>
-              <li>loyalty programs</li>
-            </Card>
-            <Card title="Inventory">
-              <li>inventory tracking</li>
-              <li>stock adjustments</li>
-              <li>low stock alerts</li>
-              <li>inventory forecasting</li>
-            </Card>
-            <Card title="Discounts">
-              <li>discount code creation</li>
-              <li>discount rules</li>
-              <li>time-limited offers</li>
-              <li>performance tracking</li>
-            </Card>
-            <Card title="Shipping and Fulfillment">
-              <li>shipping rate & methods</li>
-              <li>order fulfillment</li>
-              <li>carrier integration</li>
-              <li>return management</li>
-            </Card>
-            <Card title="Analytics and Reports">
-              <li>sales reports</li>
-              <li>customer insights</li>
-              <li>product performance</li>
-              <li>traffic analysis</li>
-            </Card>
-            <Card title="Webhooks" />
-            <Card title="Metafields" />
-            <Card title="Pages and Blogs" />
-            <Card title="Themes and Assets" />
-            <Card title="Script Tags and App Embeds" />
-            <Card title="User and Permissions" />
-          </ul>
+          <InfoCards />
         )}
       </div>
 
@@ -191,7 +130,7 @@ export default function Home() {
             <h2 onClick={() => handleSectionChange('storefrontProducts')} className={getHeaderClass('storefrontProducts')}>Shopify Storefront Products</h2>
           </div>
           <div className={styles.content}>
-            {activeSection === 'storefrontCollections' && <StorefrontCollections collections={collections} />}
+            {activeSection === 'storefrontCollections' && <StorefrontCollections collections={storefrontCollections} />}
             {activeSection === 'storefrontProducts' && <StorefrontProducts products={storefrontProducts} />}
           </div>
         </div>

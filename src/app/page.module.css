@@ -65,14 +65,7 @@
   color: var(--grey-light);
   font-size: 0.75rem;
 }
-.infoBox .cards li {
-  list-style-type: none;
-}
-.cards {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
+
 
 /* lower page section */
 .description {

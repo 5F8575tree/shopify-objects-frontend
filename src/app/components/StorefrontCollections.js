@@ -1,26 +1,24 @@
 import { useState } from 'react';
+import { getShopifyCollectionDetails } from '../services/api';
 import styles from '../styles/collections.module.css';
 
-function StorefrontCollections({ storefrontCollections }) {
+function StorefrontCollections({ collections }) {
   const [expandedCollectionId, setExpandedCollectionId] = useState(null);
-  const [collectionProducts, setCollectionProducts] = useState({});
+  const [expandedDetailsId, setExpandedDetailsId] = useState(null);
+  const [collectionDetails, setCollectionDetails] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const toggleCollectionDetails = async (collectionId) => {
+  const toggleProductDetails = async (collectionId) => {
     if (expandedCollectionId === collectionId) {
       setExpandedCollectionId(null);
     } else {
-      if (!collectionProducts[collectionId]) {
+      if (!collectionDetails[collectionId]) {
         try {
           setLoading(true);
-          // Assume getStorefrontCollectionProducts is an API call function to fetch products from a collection
-          const products = await getStorefrontCollectionProducts(collectionId);
-          setCollectionProducts({ ...collectionProducts, [collectionId]: products });
+          const details = await getShopifyCollectionDetails(collectionId);
+          setCollectionDetails({ ...collectionDetails, [collectionId]: details });
           setError(null);
-        } catch (error) {
-          console.error('Error fetching products:', error);
-          setError('Failed to fetch products.');
         } finally {
           setLoading(false);
         }
@@ -29,26 +27,49 @@ function StorefrontCollections({ storefrontCollections }) {
     }
   };
 
+  const toggleChildData = (collectionId) => {
+    setExpandedDetailsId(expandedDetailsId === collectionId ? null : collectionId);
+  };
+
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text).then(() => {
+      console.log('Text copied to clipboard');
+    }).catch(err => {
+      console.error('Failed to copy to clipboard', err);
+    });
+  };
+
   return (
     <div className={styles.collections}>
-      {storefrontCollections.map(collection => (
+      {collections.map(collection => (
         <div className={styles.collection} key={collection.id}>
           <div className={styles.header}>
-            <h3>{collection.title}</h3>
-            {/* Other buttons and functionalities as needed */}
+            <h3>{collection.handle}</h3>
+            <button onClick={() => copyToClipboard(collection.handle)}>Copy</button>
           </div>
           <div className={styles.databox}>
-            <button onClick={() => toggleCollectionDetails(collection.id)}>View Products</button>
+            <button onClick={() => toggleProductDetails(collection.id)}>Collection Products</button>
+            <button onClick={() => toggleChildData(collection.id)}>Child Data</button>
           </div>
           {expandedCollectionId === collection.id && (
             <div className={styles.collectionDetails}>
               {loading && <p>Loading...</p>}
               {error && <p>{error}</p>}
-              <div>
-                {collectionProducts[collection.id] && collectionProducts[collection.id].map(product => (
-                  <p key={product.id}>{product.title}</p>
-                ))}
-              </div>
+              {collectionDetails[collection.id] && (
+                <div>
+                  <h4>Products in this Collection:</h4>
+                  {/* {collectionDetails[collection.id].products.map(product => (
+                    <p key={product.id}>{product.title}</p>
+                  ))} */}
+                </div>
+              )}
+            </div>
+          )}
+          {expandedDetailsId === collection.id && (
+            <div className={styles.collectionDetails}>
+              <p>Title: <span>{collection.title}</span></p>
+              <p>Handle: <span>{collection.handle}</span></p>
+              <p>Id: <span>{collection.id}</span></p>
             </div>
           )}
         </div>

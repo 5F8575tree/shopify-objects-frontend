@@ -1,6 +1,6 @@
 const getShopifyCollections = async () => {
   try {
-    const response = await fetch('http://localhost:3001/shopify/collections');
+    const response = await fetch('http://localhost:3001/admin/shopify/collections');
     if (!response.ok) {
       throw new Error('Network response for collections was not ok');
     }
@@ -13,8 +13,8 @@ const getShopifyCollections = async () => {
 
 const getShopifyCollectionDetails = async (collectionId) => {
   try {
-    const collectionUrl = `http://localhost:3001/shopify/collections/${collectionId}`;
-    const productsUrl = `http://localhost:3001/shopify/collections/${collectionId}/products`;
+    const collectionUrl = `http://localhost:3001/admin/shopify/collections/${collectionId}`;
+    const productsUrl = `http://localhost:3001/admin/shopify/collections/${collectionId}/products`;
 
     const [collectionResponse, productsResponse] = await Promise.all([
       fetch(collectionUrl),
@@ -44,7 +44,7 @@ const getShopifyCollectionDetails = async (collectionId) => {
 
 const getShopifyProducts = async () => {
   try {
-    const response = await fetch('http://localhost:3001/shopify/products');
+    const response = await fetch('http://localhost:3001/admin/shopify/products');
     if (!response.ok) {
       throw new Error('Network response for products was not ok')
     }
@@ -55,15 +55,9 @@ const getShopifyProducts = async () => {
   }
 }
 
-const storefrontRequest = async (query) => {
+const getStorefrontProducts = async () => {
   try {
-    const response = await fetch('http://localhost:3001/storefront', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ query })
-    });
+    const response = await fetch('http://localhost:3001/storefront/products');
     if (!response.ok) {
       throw new Error('Storefront API response was not ok');
     }
@@ -83,28 +77,6 @@ const getStorefrontCollections = async () => {
             id
             title
             handle
-          }
-        }
-      }
-    }
-  `;
-  return await storefrontRequest(query);
-};
-
-const getStorefrontProducts = async () => {
-  const query = `
-    {
-      products(first: 10) {
-        edges {
-          node {
-            id
-            title
-            handle
-            priceRange {
-              minVariantPrice {
-                amount
-              }
-            }
           }
         }
       }

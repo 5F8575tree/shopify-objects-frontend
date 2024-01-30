@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
-import { getShopifyCollections, getShopifyProducts } from "./services/api";
+import { getShopifyCollections, getShopifyProducts, getStorefrontProducts } from "./services/api";
 import Collections from "@/app/components/Collections";
 import Products from '@/app/components/Products';
 import Card from "./components/Card";
@@ -26,9 +26,23 @@ export default function Home() {
   const [products, setProducts] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [showCards, setShowCards] = useState(false);
+  const [storefrontProducts, setStorefrontProducts] = useState([]);
 
   const handleToggleCards = () => {
     setShowCards(!showCards);
+  }
+
+  const fetchStorefrontProducts = async () => {
+    try {
+      // when i implement querying
+      // const query = 'GraphQL query here';
+      // const data = await getStorefrontProducts(query);
+      const data = await getStorefrontProducts();
+      console.log(data);
+      setStorefrontProducts(data);
+    } catch (error) {
+      console.error('Failed to fetch products via Storefront API', error);
+    }
   }
 
   useEffect(() => {
@@ -49,6 +63,10 @@ export default function Home() {
 
   const handleHeaderClick = (index) => {
     setActiveIndex(index === activeIndex ? null : index);
+
+    if (index === 1) {
+      fetchStorefrontProducts();
+    }
   };
 
   const handleSectionChange = (section) => {
@@ -174,7 +192,7 @@ export default function Home() {
           </div>
           <div className={styles.content}>
             {activeSection === 'storefrontCollections' && <StorefrontCollections collections={collections} />}
-            {activeSection === 'storefrontProducts' && <StorefrontProducts products={products} />}
+            {activeSection === 'storefrontProducts' && <StorefrontProducts products={storefrontProducts} />}
           </div>
         </div>
       )}

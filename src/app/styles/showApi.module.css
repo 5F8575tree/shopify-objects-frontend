@@ -1,0 +1,18 @@
+.showApi {
+  height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(220, 0, 0, 0.3);
+  background-image:
+    linear-gradient(145deg, rgba(255, 30, 30, 0.04) 25%, transparent 25%, transparent 75%, rgba(255, 30, 30, 0.04) 75%, rgba(255, 30, 30, 0.02)),
+    linear-gradient(45deg, rgba(255, 30, 30, 0.08) 25%, transparent 25%, transparent 75%, rgba(255, 30, 30, 0.08) 75%, rgba(255, 30, 30, 0.02));
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+  box-shadow: 0 0 10px rgba(255, 100, 100, 0.5);
+  border: 1px solid rgba(255, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  color: var(--white);
+  padding: 1rem;
+  border-radius: 4px;
+}

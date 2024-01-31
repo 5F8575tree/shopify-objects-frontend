@@ -2,6 +2,7 @@ import StorefrontApi from "./components/StorefrontApi"
 import CheckoutExtensibility from "./components/CheckoutExtensibility"
 import AdminApi from "./components/AdminApi"
 import { useActiveApi } from "@/app/context/ActiveApiProvider"
+import styles from "../../styles/showApi.module.css";
 
 function ShowApi() {
   const { activeApi } = useActiveApi();
@@ -20,7 +21,7 @@ function ShowApi() {
   }
 
   return (
-    <div>
+    <div className={styles.showApi}>
       {getActiveApiComponent()}
     </div>
   )

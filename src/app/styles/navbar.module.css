@@ -1,0 +1,15 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbarUserdata {
+  display: flex;
+  justify-content: left;
+  gap: 1rem;
+}
+.navbarFetchdata {
+  display: flex;
+  justify-content: right;
+  gap: 1rem;
+}

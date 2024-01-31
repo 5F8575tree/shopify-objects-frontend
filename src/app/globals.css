@@ -138,24 +138,3 @@ a {
     color-scheme: dark;
   }
 }
-
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.navbar-userdata {
-  display: flex;
-  justify-content: left;
-  gap: 1rem;
-}
-.navbar-fetchdata {
-  display: flex;
-  justify-content: right;
-  gap: 1rem;
-}
-.selectapi {
-  justify-self: flex-start;
-  display: flex;
-  justify-content: space-between;
-}

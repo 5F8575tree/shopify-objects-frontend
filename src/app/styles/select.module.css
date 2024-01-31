@@ -1,0 +1,16 @@
+.select {
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem 0;
+  padding: 0 0 0.45rem;
+  border-bottom: 0.2px solid var(--accent);
+}
+
+.active {
+  color: var(--white);
+}
+
+.select h3:not(.active) {
+  color: var(--grey-light);
+  cursor: pointer;
+}

@@ -1,0 +1,14 @@
+.outputData {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.9rem;
+}
+.outputData p {
+  margin: 0 0 0.25rem;
+}
+.lastChild {
+  text-align: end;
+}
+.smallFont {
+  font-size: 0.75rem;
+}

@@ -1,7 +1,10 @@
+import styles from "../../../styles/showApi.module.css";
+import OutputGrid from "./OutputGrid";
+
 function StorefrontApi() {
   return (
-    <div>
-      <h2>storefront api</h2>
+    <div className={styles.showApiContent}>
+      <OutputGrid />
     </div>
   )
 }

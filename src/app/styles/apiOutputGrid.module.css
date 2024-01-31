@@ -1,0 +1,13 @@
+.apiOutputGrid {
+  margin: 1rem 0 0;
+  width: 100%;
+}
+.apiOutputGridHeaders {
+  border-bottom: 0.4px solid var(--grey-light);
+  padding: 0 0 0.45rem;
+  display: flex;
+  justify-content: space-between;
+}
+.apiOutputGridData {
+  margin: 1rem 0;
+}

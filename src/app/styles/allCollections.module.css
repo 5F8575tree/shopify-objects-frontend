@@ -1,6 +1,0 @@
-.allCollections h4 {
-  cursor: pointer;
-}
-.allCollections h4:hover {
-  color: var(--accent);
-}

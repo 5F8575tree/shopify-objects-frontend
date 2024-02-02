@@ -1,14 +1,15 @@
 import styles from "../../../styles/outputData.module.css";
 
-const OutputData = ({ id, handle, title, description }) => {
-  console.log({ id, handle, title, description });
+const OutputData = ({ id, handle, title, products }) => {
+  const productCount = Array.isArray(products) ? products.length : 0;
+  console.log({ id, handle, title, products });
   return (
     <div className={styles.outputData}>
-      <p>{handle}</p>
-      <p>{id}</p>
-      <p>{title}</p>
-      <p className={styles.smallFont}>{description}</p>
-      <p className={styles.lastChild}>ICON</p>
+      <p className={styles.id}>{id}</p>
+      <p className={styles.handle}>{handle}</p>
+      <p className={styles.title}>{title}</p>
+      <p className={styles.products}>{productCount}</p>
+      <p className={styles.icon}></p>
     </div>
   )
 }

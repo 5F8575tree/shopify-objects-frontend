@@ -3,10 +3,11 @@
   width: 100%;
 }
 .apiOutputGridHeaders {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.9rem;
   border-bottom: 0.4px solid var(--grey-light);
   padding: 0 0 0.45rem;
-  display: flex;
-  justify-content: space-between;
 }
 .apiOutputGridData {
   margin: 1rem 0;
@@ -14,4 +15,5 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
 }

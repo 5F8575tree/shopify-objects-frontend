@@ -10,4 +10,8 @@
 }
 .apiOutputGridData {
   margin: 1rem 0;
+  height: 280px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }

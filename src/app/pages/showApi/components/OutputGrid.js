@@ -19,6 +19,16 @@ const OutputTable = () => {
         <OutputData />
         <OutputData />
         <OutputData />
+        <OutputData />
+        <OutputData />
+        <OutputData />
+        <OutputData />
+        <OutputData />
+        <OutputData />
+        <OutputData />
+        <OutputData />
+        <OutputData />
+        <OutputData />
       </div>
     </div>
   )

@@ -7,8 +7,11 @@ function AllCollections({ isActive }) {
   const { updateActiveQuery } = useActiveQuery();
 
   const handleClick = () => {
-    fetchCollections();
     updateActiveQuery('AllCollections');
+  }
+
+  const handleFetchClick = () => {
+    fetchCollections();
   }
 
   const headerStyle = isActive ? styles.activeHeader : styles.inactiveHeader;
@@ -16,6 +19,7 @@ function AllCollections({ isActive }) {
   return (
     <div className={styles.allCollections}>
       <h4 className={headerStyle} onClick={handleClick}>All Collections</h4>
+      <button className={styles.fetchButton} onClick={handleFetchClick}>Load Collections Info</button>
     </div>
   );
 }

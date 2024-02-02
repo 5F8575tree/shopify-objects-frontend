@@ -7,8 +7,11 @@ function Shop({ isActive }) {
   const { updateActiveQuery } = useActiveQuery();
 
   const handleClick = () => {
-    fetchShop();
     updateActiveQuery('Shop');
+  }
+
+  const handleFetchClick = () => {
+    fetchShop();
   }
 
   const headerStyle = isActive ? styles.activeHeader : styles.inactiveHeader;
@@ -16,6 +19,7 @@ function Shop({ isActive }) {
   return (
     <div className={styles.shop}>
       <h4 className={headerStyle} onClick={handleClick}>Shop</h4>
+      <button className={styles.fetchButton} onClick={handleFetchClick}>Load Shop Info</button>
     </div>
   );
 }

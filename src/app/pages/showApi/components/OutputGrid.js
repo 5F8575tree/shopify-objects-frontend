@@ -2,6 +2,11 @@ import styles from "../../../styles/apiOutputGrid.module.css";
 import OutputData from "./OutputData";
 import { useCollections } from '@/app/context/CollectionsContext';
 import { useActiveQuery } from "@/app/context/ActiveQueryContext";
+import HeaderForAllCollections from "./HeaderForAllCollections";
+import HeaderForAllProducts from "./HeaderForAllProducts";
+import HeaderForShop from "./HeaderForShop";
+import HeaderForSingleCollection from "./HeaderForSingleCollection";
+import HeaderForSingleProduct from "./HeaderForSingleProduct";
 
 const OutputTable = () => {
   const { collections } = useCollections();
@@ -10,11 +15,11 @@ const OutputTable = () => {
   return (
     <div className={styles.apiOutputGrid}>
       <div className={styles.apiOutputGridHeaders}>
-        <p>handle</p>
-        <p>id</p>
-        <p>title</p>
-        <p>products</p>
-        <p></p>
+        {activeQuery === 'AllCollections' && <HeaderForAllCollections />}
+        {activeQuery === 'AllProducts' && <HeaderForAllProducts />}
+        {activeQuery === 'SingleProduct' && <HeaderForSingleProduct />}
+        {activeQuery === 'SingleCollection' && <HeaderForSingleCollection />}
+        {activeQuery === 'Shop' && <HeaderForShop />}
       </div>
       <div className={styles.apiOutputGridData}>
         {activeQuery === 'AllCollections' && collections.map((collection) => (

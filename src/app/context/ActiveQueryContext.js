@@ -7,7 +7,7 @@ const ActiveQueryContext = createContext();
 export const useActiveQuery = () => useContext(ActiveQueryContext);
 
 export const ActiveQueryProvider = ({ children }) => {
-  const [activeQuery, setActiveQuery] = useState('');
+  const [activeQuery, setActiveQuery] = useState('Shop');
 
   const updateActiveQuery = (queryName) => {
     setActiveQuery(queryName);

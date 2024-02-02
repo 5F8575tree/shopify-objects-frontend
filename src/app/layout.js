@@ -3,6 +3,7 @@ import "./globals.css";
 import { ActiveApiProvider } from "./context/ActiveApiProvider";
 import { CollectionsProvider } from "./context/CollectionsContext";
 import { ActiveQueryProvider } from "./context/ActiveQueryContext";
+import { ShopProvider } from "./context/ShopContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +18,9 @@ export default function RootLayout({ children }) {
       <ActiveApiProvider>
         <CollectionsProvider>
           <ActiveQueryProvider>
-            <body className={inter.className}>{children}</body>
+            <ShopProvider>
+              <body className={inter.className}>{children}</body>
+            </ShopProvider>
           </ActiveQueryProvider>
         </CollectionsProvider>
       </ActiveApiProvider>

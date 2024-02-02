@@ -81,6 +81,19 @@ const getStorefrontCollections = async () => {
   }
 };
 
+const getShop = async () => {
+  try {
+    const response = await fetch('http://localhost:3001/storefront/shop');
+    if (!response.ok) {
+      throw new Error('Storefront API response was not ok');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error with Storefront API request:', error);
+    throw error;
+  }
+};
+
 // Mock data
 // return [
 //   { id: '1', handle: 'collection-1', title: 'Collection 1', description: 'Description of Collection 1' },
@@ -91,4 +104,4 @@ const getStorefrontCollections = async () => {
 //   { id: '6', handle: 'collection-6', title: 'Collection 6', description: 'Description of Collection 6' },
 // ];
 
-export { getShopifyCollections, getShopifyProducts, getShopifyCollectionDetails, getStorefrontCollections, getStorefrontProducts };
+export { getShopifyCollections, getShopifyProducts, getShopifyCollectionDetails, getStorefrontCollections, getStorefrontProducts, getShop };

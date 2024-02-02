@@ -1,6 +1,6 @@
 import styles from "../../../styles/outputData.module.css";
 
-const OutputData = ({ id, handle, title, products }) => {
+const OutputAllCollectionsData = ({ id, handle, title, products }) => {
   const productCount = Array.isArray(products) ? products.length : 0;
   console.log({ id, handle, title, products });
   return (
@@ -14,4 +14,4 @@ const OutputData = ({ id, handle, title, products }) => {
   )
 }
 
-export default OutputData
+export default OutputAllCollectionsData

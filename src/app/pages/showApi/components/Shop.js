@@ -1,10 +1,13 @@
 import styles from "@/app/styles/queries.module.css";
 import { useActiveQuery } from "@/app/context/ActiveQueryContext";
+import { useShop } from "@/app/context/ShopContext";
 
 function Shop({ isActive }) {
+  const { fetchShop } = useShop();
   const { updateActiveQuery } = useActiveQuery();
 
   const handleClick = () => {
+    fetchShop();
     updateActiveQuery('Shop');
   }
 

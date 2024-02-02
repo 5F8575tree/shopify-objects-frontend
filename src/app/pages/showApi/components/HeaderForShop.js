@@ -2,7 +2,7 @@ import styles from '@/app/styles/headerFor.module.css';
 
 const HeaderForShop = () => {
   return (
-    <div className={styles.headers}>
+    <div className={styles.headersFor}>
       <p className={styles.singleHeader}>handle</p>
       <p className={styles.singleHeader}>id</p>
       <p className={styles.singleHeader}>title</p>

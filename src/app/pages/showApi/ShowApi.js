@@ -3,7 +3,8 @@ import CheckoutExtensibility from "./components/CheckoutExtensibility"
 import AdminApi from "./components/AdminApi"
 import { useActiveApi } from "@/app/context/ActiveApiProvider"
 import styles from "../../styles/showApi.module.css";
-import QueryTerm from "./components/QueryTerm";
+import InputData from "./components/InputData";
+
 
 function ShowApi() {
   const { activeApi } = useActiveApi();
@@ -23,7 +24,7 @@ function ShowApi() {
 
   return (
     <div className={styles.showApi}>
-      <QueryTerm />
+      <InputData />
       <div className={styles.showApiTable}>
         {getActiveApiComponent()}
       </div>

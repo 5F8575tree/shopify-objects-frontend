@@ -1,0 +1,6 @@
+.allProducts h4 {
+  cursor: pointer;
+}
+.allProducts h4:hover {
+  color: var(--accent);
+}

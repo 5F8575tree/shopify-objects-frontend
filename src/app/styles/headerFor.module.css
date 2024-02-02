@@ -13,3 +13,8 @@
 .headersForShop p {
   font-size: 0.9rem;
 }
+.headersForAllProducts {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 0.5fr repeat(4, 1fr);
+}

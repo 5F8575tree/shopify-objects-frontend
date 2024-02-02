@@ -1,5 +1,6 @@
 import styles from "../../../styles/apiOutputGrid.module.css";
 import OutputAllCollectionsData from "./OutputAllCollectionsData";
+import OutputAllProductsData from "./OutputAllProductsData";
 import OutputShopData from "./OutputShopData";
 import { useShop } from '@/app/context/ShopContext';
 import { useCollections } from "@/app/context/CollectionsContext";
@@ -9,10 +10,11 @@ import HeaderForAllProducts from "./HeaderForAllProducts";
 import HeaderForShop from "./HeaderForShop";
 import HeaderForSingleCollection from "./HeaderForSingleCollection";
 import HeaderForSingleProduct from "./HeaderForSingleProduct";
-
+import { useProducts } from "@/app/context/ProductsContext";
 
 const OutputTable = () => {
   const { collections } = useCollections();
+  const { products } = useProducts();
   const { activeQuery } = useActiveQuery();
   const { shop } = useShop();
 
@@ -29,7 +31,9 @@ const OutputTable = () => {
         {activeQuery === 'AllCollections' && collections.map((collection) => (
           <OutputAllCollectionsData key={collection.id} {...collection} />
         ))}
-        {activeQuery === 'AllProducts' && <div>All products</div>}
+        {activeQuery === 'AllProducts' && products.map((product) => (
+          <OutputAllProductsData key={product.id} {...product} />
+        ))}
         {activeQuery === 'SingleProduct' && <div>Single product</div>}
         {activeQuery === 'Shop' &&
           <OutputShopData key={shop.id} {...shop} />

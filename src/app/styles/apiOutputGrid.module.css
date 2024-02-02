@@ -12,5 +12,7 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+}
+.apiOutputGridData .outputShopData {
+  justify-content: flex-start;
 }
